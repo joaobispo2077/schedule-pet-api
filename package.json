@@ -22,7 +22,10 @@
     },
     "homepage": "https://github.com/joaobispo2077/API-RESTful#readme",
     "dependencies": {
-        "express": "^4.17.1",
+        "consign": "^0.1.6",
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
         "nodemon": "^2.0.4"
     }
 }

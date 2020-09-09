@@ -1,12 +1,7 @@
-const express = require('express');
+const customExpress = require("./src/config/customExpress");
 
-const app = express();
+const app = customExpress();
 
 app.listen(3000, (req, res) => {
     console.log('Servidor Rodando na porta 3000')
 });
-
-
-app.get('/atendimentos', (req, res) => {
-    res.send('Amo a Viviane!');
-})
