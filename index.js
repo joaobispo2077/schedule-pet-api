@@ -1,6 +1,7 @@
 const customExpress = require("./src/config/customExpress");
 const connection = require('./src/app/database/connection');
 
+const Tables = require('./src/app/database/tables');
 
 connection.connect((err) => {
     if (err) {
@@ -9,6 +10,9 @@ connection.connect((err) => {
     } else {
 
         console.log('Conectado com sucesso!');
+
+        Tables.init(connection);
+
 
         const app = customExpress();
 
