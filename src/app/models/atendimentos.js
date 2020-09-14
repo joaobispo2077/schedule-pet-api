@@ -3,7 +3,7 @@ const moment = require('moment');
 const connection = require('../infra/connection');
 class Atendimentos {
 
-    create(atendimento) {
+    create(atendimento, res) {
         const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss');
         const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss')
 
@@ -13,9 +13,9 @@ class Atendimentos {
 
         connection.query(sql, atendimentoDatado, (err, result) => {
             if (err) {
-                console.log(err);
+                res.status(400).json(err); //400 Bad Request
             } else {
-                console.log(result);
+                res.status(201).json(result); // 201 Created w Success
             }
         });
     }
