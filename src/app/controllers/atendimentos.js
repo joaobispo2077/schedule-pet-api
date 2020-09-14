@@ -2,8 +2,6 @@ const Atendimentos = require('../models/atendimentos');
 
 module.exports = (app) => {
     app.get('/atendimentos', (req, res) => {
-        const atendimento = req.body;
-
         const atendimentos = new Atendimentos();
 
         atendimentos.index(res);
@@ -24,6 +22,14 @@ module.exports = (app) => {
 
         atendimentos.create(atendimento, res);
 
+    });
+
+    app.patch('/atendimentos/:id', (req, res) => {
+        const id = parseInt(req.params.id);
+        const values = req.body;
+
+        const atendimentos = new Atendimentos();
+        atendimentos.uptade(id, values, res);
     });
 
 }

@@ -72,6 +72,23 @@ class Atendimentos {
             });
         }
 
+
+    }
+
+    uptade(id, values, res) {
+        if (values.data) {
+            values.data = moment(values.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
+        }
+
+        const sql = 'UPDATE Atendimentos SET ? Where id=?'
+
+        connection.query(sql, [values, id], (err, result) => {
+            if (err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json(result);
+            }
+        })
     }
 }
 
