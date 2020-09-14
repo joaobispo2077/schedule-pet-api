@@ -67,7 +67,8 @@ class Atendimentos {
                 if (err || !isValidName, !isValidDate) {
                     res.status(400).json(err); //400 Bad Request
                 } else {
-                    res.status(201).json(result); // 201 Created w Success
+                    console.log(result);
+                    res.status(201).json({ atendimento }); // 201 Created w Success
                 }
             });
         }
@@ -86,7 +87,8 @@ class Atendimentos {
             if (err) {
                 res.status(400).json(err);
             } else {
-                res.status(200).json(result);
+                console.log(result);
+                res.status(200).json({...values, id });
             }
         });
     }
@@ -98,7 +100,7 @@ class Atendimentos {
             if (err) {
                 res.status(400).json(err);
             } else {
-                res.status(200).json(result);
+                res.status(200).json({ id });
             }
         })
     }
