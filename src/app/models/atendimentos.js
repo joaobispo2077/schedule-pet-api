@@ -88,6 +88,18 @@ class Atendimentos {
             } else {
                 res.status(200).json(result);
             }
+        });
+    }
+
+    delete(id, res) {
+        const sql = 'DELETE FROM Atendimentos WHERE id = ?';
+
+        connection.query(sql, id, (err, result) => {
+            if (err) {
+                res.status(400).json(err);
+            } else {
+                res.status(200).json(result);
+            }
         })
     }
 }

@@ -32,4 +32,11 @@ module.exports = (app) => {
         atendimentos.uptade(id, values, res);
     });
 
+    app.delete('/atendimentos/:id', (req, res) => {
+        const id = parseInt(req.params.id);
+
+        const atendimentos = new Atendimentos();
+        atendimentos.delete(id, res);
+    });
+
 }
