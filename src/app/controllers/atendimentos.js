@@ -1,24 +1,17 @@
 const Atendimentos = require('../models/atendimentos');
 
 module.exports = (app) => {
-    app.get('/atendimentos', (req, res) => {
-        const atendimentos = new Atendimentos();
-
-        atendimentos.index(res);
-
-    });
+    const atendimentos = new Atendimentos();
+    app.get('/atendimentos', (req, res) => atendimentos.index(res));
 
     app.get('/atendimentos/:id', (req, res) => {
         const id = parseInt(req.params.id);
 
-        const atendimentos = new Atendimentos();
         atendimentos.searchById(id, res);
     });
 
     app.post('/atendimentos', (req, res) => {
         const atendimento = req.body;
-
-        const atendimentos = new Atendimentos();
 
         atendimentos.create(atendimento, res);
 
@@ -28,14 +21,12 @@ module.exports = (app) => {
         const id = parseInt(req.params.id);
         const values = req.body;
 
-        const atendimentos = new Atendimentos();
         atendimentos.uptade(id, values, res);
     });
 
     app.delete('/atendimentos/:id', (req, res) => {
         const id = parseInt(req.params.id);
 
-        const atendimentos = new Atendimentos();
         atendimentos.delete(id, res);
     });
 
