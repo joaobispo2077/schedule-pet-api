@@ -2,7 +2,11 @@ const Atendimentos = require('../models/atendimentos');
 
 module.exports = (app) => {
   const atendimentos = new Atendimentos();
-  app.get('/atendimentos', (req, res) => atendimentos.index(res));
+  app.get('/atendimentos', (req, res) =>
+    atendimentos
+    .index()
+    .then(results => res.json(results))
+    .catch(err => res.status(400).json(err)));
 
   app.get('/atendimentos/:id', (req, res) => {
     const id = parseInt(req.params.id);

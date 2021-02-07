@@ -29,17 +29,8 @@ class Atendimentos {
 
   }
 
-  index(res) {
-
-    const sql = 'SELECT * FROM Atendimentos';
-
-    connection.query(sql, (err, results) => {
-      if (err) {
-        res.status(400).json(err);
-      } else {
-        res.status(200).json(results);
-      }
-    })
+  index() {
+    return repositories.index();
   }
 
   searchById(id, res) {
