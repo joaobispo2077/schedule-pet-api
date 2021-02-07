@@ -2,7 +2,7 @@ const connection = require('../infra/connection');
 
 class Pet {
   create(pet, res) {
-    const query = 'INSERT INTO Pets ?'
+    const query = 'INSERT INTO Pets SET ?'
     connection.query(query, pet, (err) => {
       if (err) {
         console.log(err);
