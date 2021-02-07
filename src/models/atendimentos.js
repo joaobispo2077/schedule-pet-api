@@ -4,6 +4,30 @@ const axios = require('axios');
 const connection = require('../infra/database/connection');
 const repositories = require('../repositories/atendimentos');
 class Atendimentos {
+  constructor() {
+    this.isValidDate = ({ date, createdDate }) => moment(date).isSameOrAfter(createdDate);
+    this.isValidName = (length) => length >= 4;
+    this.validate = (params) => this.validations.filter(field => {
+      const { name } = field;
+      const param = params[name];
+
+      return !field.isValid(param);
+    });
+
+    this.validations = [{
+        name: 'date',
+        isValid: this.isValidDate,
+        message: 'A data deve ser maior ou igual que a data atual'
+      },
+      {
+        name: 'name',
+        isValid: this.isValidName,
+        message: 'O nome do cliente deve ter pelo menos 4 caracteres'
+      }
+    ];
+
+
+  }
 
   index(res) {
 
@@ -37,26 +61,17 @@ class Atendimentos {
 
   create(atendimento) {
     const dataCriacao = moment().format('YYYY-MM-DD HH:mm:ss');
-    const data = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
+    const createdDate = moment(atendimento.data, 'DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
 
-    const isValidDate = moment(data).isSameOrAfter(dataCriacao);
-    const isValidName = atendimento.cliente.length >= 4;
-
-    const validations = [
-
-      {
-        nome: 'data',
-        valido: isValidDate,
-        mensagem: 'A data deve ser maior ou igual que a data atual'
+    const validationParams = {
+      date: {
+        date,
+        createdDate
       },
-      {
-        nome: 'nome',
-        valido: isValidName,
-        mensagem: 'O nome do cliente deve ter pelo menos 4 caracteres'
-      }
-    ];
+      cliente: { length: atendimento.cliente.length }
+    }
 
-    const errors = validations.filter((validation) => !validation.valido);
+    const errors = this.validate(validationParams);
     const areThereErrors = errors.length;
 
     if (areThereErrors) {
