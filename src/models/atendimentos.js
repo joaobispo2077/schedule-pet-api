@@ -1,4 +1,5 @@
 const moment = require('moment');
+const axios = require('axios');
 
 const connection = require('../infra/connection');
 class Atendimentos {
@@ -19,14 +20,15 @@ class Atendimentos {
   searchById(id, res) {
     const sql = `SELECT * FROM Atendimentos WHERE id = ${id}`;
 
-
-
-
-    connection.query(sql, (err, result) => {
+    connection.query(sql, async(err, result) => {
       const atendimento = result[0];
+      const cpf = atendimento.cliente;
+
       if (err) {
         res.tatus(400).json(err);
       } else {
+        const { data } = await axios.get(`http://localhost:8082/${cpf}`);
+        atendimento.cliente = data;
         res.status(200).json(atendimento);
       }
     })
@@ -68,7 +70,8 @@ class Atendimentos {
           res.status(400).json(err); //400 Bad Request
         } else {
           console.log(result);
-          res.status(201).json({ atendimento }); // 201 Created w Success
+          atendimento.id = result.insertId;
+          res.status(201).json(atendimento); // 201 Created w Success
         }
       });
     }
