@@ -1,25 +1,25 @@
 const customExpress = require("./src/config/customExpress");
-const connection = require('./src/app/infra/connection');
+const connection = require('./src/infra/connection');
 
-const Tables = require('./src/app/infra/tables');
+const Tables = require('./src/infra/tables');
 
 connection.connect((err) => {
 
-    if (err) {
-        console.log(err);
+  if (err) {
+    console.log(err);
 
-    } else {
+  } else {
 
-        console.log('Conectado com sucesso!');
+    console.log('Conectado com sucesso!');
 
-        Tables.init(connection);
+    Tables.init(connection);
 
 
-        const app = customExpress();
+    const app = customExpress();
 
-        app.listen(3000, (req, res) => {
-            console.log('Servidor Rodando na porta 3000')
-        });
+    app.listen(3000, (req, res) => {
+      console.log('Servidor Rodando na porta 3000')
+    });
 
-    }
+  }
 })
