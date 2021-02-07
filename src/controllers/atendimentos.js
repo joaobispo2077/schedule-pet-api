@@ -1,33 +1,38 @@
 const Atendimentos = require('../models/atendimentos');
 
 module.exports = (app) => {
-    const atendimentos = new Atendimentos();
-    app.get('/atendimentos', (req, res) => atendimentos.index(res));
+  const atendimentos = new Atendimentos();
+  app.get('/atendimentos', (req, res) => atendimentos.index(res));
 
-    app.get('/atendimentos/:id', (req, res) => {
-        const id = parseInt(req.params.id);
+  app.get('/atendimentos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
 
-        atendimentos.searchById(id, res);
-    });
+    atendimentos.searchById(id, res);
+  });
 
-    app.post('/atendimentos', (req, res) => {
-        const atendimento = req.body;
+  app.post('/atendimentos', (req, res) => {
+    const atendimento = req.body;
 
-        atendimentos.create(atendimento, res);
+    atendimentos.create(atendimento)
+      .then(atendimentoCadastrado => res.status(201).json(atendimentoCadastrado))
+      .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+      });
 
-    });
+  });
 
-    app.patch('/atendimentos/:id', (req, res) => {
-        const id = parseInt(req.params.id);
-        const values = req.body;
+  app.patch('/atendimentos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const values = req.body;
 
-        atendimentos.uptade(id, values, res);
-    });
+    atendimentos.uptade(id, values, res);
+  });
 
-    app.delete('/atendimentos/:id', (req, res) => {
-        const id = parseInt(req.params.id);
+  app.delete('/atendimentos/:id', (req, res) => {
+    const id = parseInt(req.params.id);
 
-        atendimentos.delete(id, res);
-    });
+    atendimentos.delete(id, res);
+  });
 
 }
